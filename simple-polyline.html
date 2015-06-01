@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple Polylines</title>
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script>
+
+
+function initialize() {
+  var mapOptions = {
+    zoom: 15,
+    center: new google.maps.LatLng(-18.91591954720979, -48.25865628720106),
+    mapTypeId: google.maps.MapTypeId.HYBRID
+  };
+
+  var map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+  var image = 'http://i.imgur.com/d4PspAP.jpg';
+
+  var linha_151 = [{"A":-18.916152017921593,"F":-48.25793981552124},{"A":-18.916120000000003,"F":-48.257940000000005},{"A":-18.916330000000002,"F":-48.2571},{"A":-18.91666,"F":-48.25594},{"A":-18.91693,"F":-48.254960000000004},{"A":-18.917170000000002,"F":-48.25388},{"A":-18.917440000000003,"F":-48.25287},{"A":-18.917820000000003,"F":-48.251520000000006},{"A":-18.918190000000003,"F":-48.250060000000005},{"A":-18.918750000000003,"F":-48.24792},{"A":-18.918750000000003,"F":-48.24792},{"A":-18.919050000000002,"F":-48.24674},{"A":-18.919210000000003,"F":-48.246100000000006},{"A":-18.919310000000003,"F":-48.245760000000004},{"A":-18.919240000000002,"F":-48.245740000000005},{"A":-18.91831,"F":-48.245470000000005},{"A":-18.91701,"F":-48.2451},{"A":-18.91571,"F":-48.244730000000004},{"A":-18.91554,"F":-48.24541000000001},{"A":-18.915210000000002,"F":-48.24671000000001}];
+  var flightPlanCoordinates = [];
+
+  for(i=0;i<linha_151.length;i++){
+
+    flightPlanCoordinates.push(new google.maps.LatLng(linha_151[i].A,linha_151[i].F));
+
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(linha_151[i].A,linha_151[i].F),
+      title: '#' + i,
+      map: map,
+      icon: image
+    });
+    var infowindow = new google.maps.InfoWindow({
+        content: 'ola mundo'
+    });
+    google.maps.event.addDomListener(marker, 'click', function(){
+      //infowindow.open(map, marker);
+      console.log(marker);
+    });
+
+  }
+
+
+
+  var flightPath = new google.maps.Polyline({
+    path: flightPlanCoordinates,
+    geodesic: true,
+    strokeColor: '#FF0000',
+    strokeOpacity: 1.0,
+    strokeWeight: 1
+  });
+
+  flightPath.setMap(map);
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>

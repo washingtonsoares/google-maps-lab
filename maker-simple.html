@@ -14,20 +14,37 @@
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <script>
+    var soma=0;
+    var marker = {};
+
 function initialize() {
   var myLatlng = new google.maps.LatLng(-18.836991,-48.317133);
-  
+
   var mapOptions = {
-    zoom: 4,
+    zoom: 17,
     center: myLatlng
   }
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-  var marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      title: 'Hello World!'
+  var infowindow = new google.maps.InfoWindow({
+      content: 'ola mundo '+soma++
   });
+
+
+  google.maps.event.addDomListener(map, 'click',function(event){
+    var marker = new google.maps.Marker({
+        position: event.latLng,
+        map: map,
+        title: 'Hello World!'
+    });
+  });
+  google.maps.event.addDomListener(marker,'click',function(){
+    console.log('ola');
+    infowindow.open(map, marker);
+
+  });
+
+
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);

@@ -33,7 +33,7 @@ function initialize() {
       icon: image
   });
 
-  google.maps.event.addListener(beachMarker, 'drag', function(event) {
+  google.maps.event.addListener(beachMarker, 'click', function(event) {
     console.log(beachMarker.position.A);
     console.log(beachMarker.position.F);
   });
